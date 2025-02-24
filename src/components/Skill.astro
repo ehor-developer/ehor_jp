@@ -1,0 +1,25 @@
+---
+type Skill = {
+  title: string;
+  description: string;
+  items: string[];
+};
+
+const { title, skills } = Astro.props;
+---
+
+<div class="mt-10">
+    <div>
+        {skills.map((skill: Skill) => (
+            <div class="my-4 mx-4">
+                <h4 class="text-2xl font-bold">{skill.title}</h4>
+                <div class="my-4">{skill.description}</div>
+                <ul class="list-inside list-disc">
+                    {skill.items.map((item: string) => (
+                        <li>{item}</li>
+                    ))}
+                </ul>
+            </div>
+        ))}
+    </div>
+</div>

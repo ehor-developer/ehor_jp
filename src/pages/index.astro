@@ -1,11 +1,62 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<Layout title="ホーム" description="Ehor.についての紹介です。" />
+<div class="min-h-screen flex items-center justify-center tracking-wide">
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-center mb-4">
+      <img
+        src="/image/icon.png"
+        alt="avatar"
+        width="150"
+        height="150"
+        class="rounded-full select-none"
+      />
+    </div>
+    <div class="text-center space-y-2 text-white">
+      <h2 class="text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold my-2">
+        Ehor
+      </h2>
+      <p class="text-sm sm:text-base">16yo</p>
+      <p class="text-md md:text-lg">Programming / Movie Creator / Designer</p>
+      <div class="py-4">
+        <div class="flex justify-center space-x-2 sm:space-x-3 md:space-x-4">
+          <a
+            href="https://github.com/ehor-developer"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="/github.svg"
+              alt="GitHub"
+              class="w-6 h-6 sm:w-5 sm:h-5 md:w-6 md:h-6 opacity-100 transition-all duration-300 hover:scale-125 hover:opacity-70"
+            />
+          </a>
+          <a
+            href="https://x.com/ehor_developer"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="/X.svg"
+              alt="X"
+              class="w-6 h-6 sm:w-5 sm:h-5 md:w-6 md:h-6 opacity-100 transition-all duration-300 hover:scale-125 hover:opacity-70"
+            />
+          </a>
+          <a
+            href="https://discord.com/users/1181031266020241432"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="/discord.svg"
+              alt="Discord"
+              class="w-6 h-6 sm:w-5 sm:h-5 md:w-6 md:h-6 opacity-100 transition-all duration-300 hover:scale-125 hover:opacity-70"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Container from "../components/Container.astro";
+import Title from "../components/Title.astro";
+const projects = await Astro.glob('../pages/works/*.md');
+---
+
+<Layout title="Works" description="私のプロジェクト一覧です。">
+  <Container>
+    <Title title="Works" />
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1 mt-10">
+      {projects.map((project) => (
+        <li class="flex flex-col items-center mx-[4px]">
+          <a href={project.url} class="block w-full">
+            <img src={`/image/works/${project.frontmatter.image}`} alt={project.frontmatter.title}  class="w-full object-cover hover:opacity-70 transition-opacity duration-100 ease-in-out"
+            loading="lazy" decoding="async"/>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Container>
+</Layout>
