@@ -9,7 +9,7 @@ export interface Props {
 
 const { title, description, image } = Astro.props;
 const url = Astro.url;
-const ogp_image = image || "/ogp.png";
+const ogp_image = image || "/image/ogp.png";
 ---
 
 <!doctype html>
@@ -34,7 +34,7 @@ const ogp_image = image || "/ogp.png";
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
-    <meta name="twitter:image" content="/image/ogp.png" />
+    <meta name="twitter:image" content={ogp_image} />
   </head>
   <body class="bg-stone-900 text-white">
     <Navbar />
