@@ -1,0 +1,176 @@
+---
+interface Props {
+  id: string;
+  triggerText?: string;
+  triggerId?: string;
+  maxWidth?: string;
+}
+
+const { id, triggerText, triggerId, maxWidth = "max-w-2xl" } = Astro.props;
+---
+
+{triggerText && (
+    <div class="flex py-2 justify-center">
+    <button
+        id={triggerId || `${id}-btn`}
+        class="flex items-center gap-1 text-sm text-gray hover:opacity-90 cursor-pointer focus:outline-none"
+        type="button"
+    >
+        <span>{triggerText}</span>
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true" class="inline-block">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+    </div>
+)}
+
+<div
+  id={id}
+  class="hidden fixed inset-0 z-50 opacity-0 transition-opacity duration-300"
+>
+  <div
+    class="fixed inset-0 flex items-center justify-center"
+    style="background-color: rgba(41, 37, 36, 0.8)"
+    id={`${id}-backdrop`}
+  >
+    <div
+      class={`relative bg-white text-stone-900 rounded-lg ${maxWidth} w-full mx-4 p-6 max-h-[85vh] overflow-y-auto transform transition-transform duration-300`}
+      id={`${id}-dialog`}
+    >
+      <button
+        class="absolute top-4 right-4 text-xl hover:opacity-50 duration-100 cursor-pointer focus:outline-none z-10"
+        id={`close-${id}-btn`}
+      >
+        ×
+      </button>
+      <div id={`${id}-content`}>
+        <slot />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // Track currently open modal
+    let currentOpenModal: HTMLElement | null = null;
+
+    function setupModalById(modalId: string) {
+      const modal = document.getElementById(modalId);
+      const modalDialog = document.getElementById(`${modalId}-dialog`);
+      const modalBackdrop = document.getElementById(`${modalId}-backdrop`);
+      const closeBtn = document.getElementById(`close-${modalId}-btn`);
+      const openBtn = document.getElementById(`${modalId}-btn`);
+
+      if (!modal || !modalDialog) {
+        console.warn(`Modal elements not found for: ${modalId}`);
+        return null;
+      }
+
+      console.log(`Setting up modal: ${modalId}`);
+
+      const openModal = () => {
+        // Close any currently open modal first
+        if (currentOpenModal && currentOpenModal !== modal) {
+          closeAnyModal(currentOpenModal);
+        }
+
+        modal.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+        currentOpenModal = modal;
+        
+        setTimeout(() => {
+          modal.classList.remove("opacity-0");
+          modal.classList.add("opacity-100");
+        }, 10);
+      };
+
+      const closeModal = () => {
+        modal.classList.remove("opacity-100");
+        modal.classList.add("opacity-0");
+        
+        // Reset current modal reference immediately
+        if (currentOpenModal === modal) {
+          currentOpenModal = null;
+        }
+        
+        setTimeout(() => {
+          modal.classList.add("hidden");
+          // Only reset overflow if no modal is open
+          if (!currentOpenModal) {
+            document.body.style.overflow = "";
+          }
+        }, 300);
+      };
+
+      // Open button click
+      if (openBtn) {
+        openBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          openModal();
+        });
+      }
+
+      // Close button click
+      if (closeBtn) {
+        closeBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          closeModal();
+        });
+      }
+
+      // Backdrop click
+      if (modalBackdrop) {
+        modalBackdrop.addEventListener("click", (event) => {
+          if (!modalDialog.contains(event.target as Node)) {
+            closeModal();
+          }
+        });
+      }
+
+      // Escape key
+      document.addEventListener("keydown", (event: KeyboardEvent) => {
+        if (event.key === "Escape" && currentOpenModal === modal) {
+          closeModal();
+        }
+      });
+
+      return { openModal, closeModal };
+    }
+
+    function closeAnyModal(modal: HTMLElement) {
+      modal.classList.remove("opacity-100");
+      modal.classList.add("opacity-0");
+      setTimeout(() => {
+        modal.classList.add("hidden");
+      }, 300);
+    }
+
+    // Export to window
+    (window as any).setupModal = setupModalById;
+    (window as any).closeCurrentModal = () => {
+      if (currentOpenModal) {
+        const modalToClose = currentOpenModal;
+        currentOpenModal = null;
+        closeAnyModal(modalToClose);
+        document.body.style.overflow = "";
+      }
+    };
+
+    // Auto-initialize all modals when DOM is ready
+    function initializeModals() {
+      const modals = document.querySelectorAll('[id$="-modal"]');
+      console.log(`Found ${modals.length} modal(s) to initialize`);
+      modals.forEach((modalElement) => {
+        setupModalById(modalElement.id);
+      });
+    }
+
+    // Run on DOMContentLoaded or immediately if already loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeModals);
+    } else {
+      initializeModals();
+    }
+  })();
+</script>

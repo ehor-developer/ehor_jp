@@ -1,79 +1,289 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Title from "../components/Title.astro";
+import Modal from "../components/Modal.astro";
 import { Image } from "astro:assets";
 import avatar from "../../assets/icon.png";
+import worksData from "../pages/works/works.json";
+const projectsData = worksData;
 ---
 
 <Layout title="ホーム" description="Ehor.についての紹介です。" />
 
-<div class="min-h-screen flex items-center justify-center tracking-wide">
-  <div class="px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen py-24 px-4 max-w-6xl mx-auto tracking-wide">
+  <section>
     <div class="flex justify-center mb-4">
       <Image
         src={avatar}
         alt="Ehorのアバター"
-        width={150}
-        height={150}
+        width={100}
+        height={100}
         class="rounded-full select-none"
         format="webp"
         loading="lazy"
       />
     </div>
-    <div class="text-center space-y-2 text-white">
-      <h2 class="text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold my-2">
-        Ehor
-      </h2>
-      <p class="text-sm sm:text-base">16yo</p>
-      <p class="text-md md:text-lg">Programming / Movie Creator / Designer</p>
-      <div class="py-4">
-        <div class="flex justify-center space-x-2 sm:space-x-3 md:space-x-4">
-          <a
-            href="https://github.com/ehor-developer"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-          >
-            <Image
-              src="/github.svg"
-              alt="GitHubのアイコン"
-              class="w-6 h-6 sm:w-5 sm:h-5 md:w-6 md:h-6 opacity-100 duration-300 hover:scale-125 hover:opacity-70"
-              width={24}
-              height={24}
-              loading="lazy"
-            />
-          </a>
-          <a
-            href="https://x.com/ehor_developer"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="X"
-          >
-            <Image
-              src="/X.svg"
-              alt="Xのアイコン"
-              class="w-6 h-6 sm:w-5 sm:h-5 md:w-6 md:h-6 opacity-100 duration-300 hover:scale-125 hover:opacity-70"
-              width={24}
-              height={24}
-              loading="lazy"
-            />
-          </a>
-          <a
-            href="https://discord.com/users/1181031266020241432"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Discord"
-          >
-            <Image
-              src="/discord.svg"
-              alt="Discordのアイコン"
-              class="w-6 h-6 sm:w-5 sm:h-5 md:w-6 md:h-6 opacity-100 duration-300 hover:scale-125 hover:opacity-70"
-              width={24}
-              height={24}
-              loading="lazy"
-            />
-          </a>
+    <div class="text-center text-stone-900">
+      <h2 class="text-3xl sm:text-3xl md:text-4xl font-bold mb-2">Ehor</h2>
+      <div class="text-gray text-sm *:pt-2">
+        <div>
+          <p>2008年生まれ、高校3年生です。</p>
+        </div>
+        <div>
+          <p>グラフィックデザインや、キービジュアルの制作</p>
+          <p>図解などを用いた「伝わる」スライドの作成</p>
+          <p>ホームページ制作、アプリ開発も行っています。</p>
         </div>
       </div>
+
+      <Modal id="skills-modal" triggerText="詳しく見る">
+        <div class="mt-10 text-left">
+          <div class="gap-6">
+            <div class="w-full">
+              <p class="font-bold mb-3">はじめまして。</p>
+              <div class="text-gray text-sm">
+                <p>
+                  「デザイン」「アプリ開発」「映像制作」を主軸とした作品の制作に取り組んでいます。
+                </p>
+                <p>様々な分野で活動できるクリエイターを目指しています。</p>
+              </div>
+            </div>
+            <div class="w-full">
+              <p class="font-bold my-3">好きなこと</p>
+              <div class="flex flex-wrap gap-2">
+                {
+                  [
+                    "ホームページ制作",
+                    "資料制作",
+                    "アプリ開発",
+                    "映像制作",
+                    "写真・動画撮影",
+                    "課題解決",
+                    "アイデア発想",
+                    "プロジェクトマネジメント",
+                  ].map((item) => (
+                    <span class="py-1 px-3 bg-stone-100 text-stone-700 rounded-full text-sm">
+                      {item}
+                    </span>
+                  ))
+                }
+              </div>
+            </div>
+            <div class="w-full">
+              <p class="font-bold my-3">使えるツール</p>
+              {
+                [
+                  {
+                    category: "デザイン",
+                    tools: [
+                      "Adobe Illustrator",
+                      "Adobe Photoshop",
+                      "Figma",
+                      "Canva",
+                      "Keynote",
+                      "Googleスライド",
+                    ],
+                  },
+                  {
+                    category: "開発",
+                    tools: [
+                      "HTML",
+                      "CSS",
+                      "JavaScript",
+                      "TypeScript",
+                      "PHP",
+                      "Next.js / React / TailwindCSS",
+                      "Astro",
+                    ],
+                  },
+                  {
+                    category: "映像制作",
+                    tools: ["Adobe Premiere Pro", "CSS"],
+                  },
+                ].map(({ category, tools }) => (
+                  <div class="pb-4">
+                    <div class="flex flex-wrap gap-2">
+                      {tools.map((tool) => (
+                        <span class="py-1 px-3 bg-stone-100 text-stone-700 rounded-full text-sm">
+                          {tool}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </Modal>
+    </div>
+  </section>
+
+  <div>
+    <div class="flex justify-center mt-4 space-x-4">
+      <a
+        href="https://github.com/ehor-developer"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub"
+      >
+        <Image
+          src="/github.svg"
+          alt="GitHubのアイコン"
+          class="w-6 h-6 opacity-100 duration-300 hover:scale-125 hover:opacity-70"
+          width={24}
+          height={24}
+          loading="lazy"
+        />
+      </a>
+      <a
+        href="https://x.com/ehor_developer"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="X"
+      >
+        <Image
+          src="/X.svg"
+          alt="Xのアイコン"
+          class="w-6 h-6 opacity-100 duration-300 hover:scale-125 hover:opacity-70"
+          width={24}
+          height={24}
+          loading="lazy"
+        />
+      </a>
     </div>
   </div>
+
+  <div>
+    <Title title="Works" subtitle="私が取り組んできたことです。" />
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 mx-auto mb-4">
+      {
+        projectsData
+          .slice(0, Math.ceil(projectsData.length))
+          .map((project, index) => (
+            <li class="flex items-stretch aspect-video">
+              <button
+                class="w-full h-full focus:outline-none group transition ease-in-out cursor-pointer relative"
+                data-index={index}
+                type="button"
+              >
+                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-300 rounded-lg z-10 pointer-events-none" />
+                <div class="w-full h-full rounded-lg overflow-hidden">
+                  <img
+                    src={`/image/works/${project.image}`}
+                    alt={project.title}
+                    class="w-full h-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
+                    style="object-fit: cover; object-position: center;"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div
+                  class="absolute inset-0 flex flex-col justify-end items-start rounded-lg z-20"
+                  style="background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.0) 60%);"
+                >
+                  <div class="w-full text-white p-3">
+                    <h3 class="text-lg text-shadow-md font-semibold">
+                      {project.title}
+                    </h3>
+                    <p class="text-xs">{project.description}</p>
+                  </div>
+                </div>
+              </button>
+            </li>
+          ))
+      }
+    </ul>
+  </div>
+
 </div>
+
+<Modal id="works-modal">
+  <div id="modal-content"></div>
+</Modal>
+<script define:vars={{ projectsData }}>
+  (function () {
+    const projects_data = projectsData;
+
+    function open(index_value) {
+      const modal_element = document.getElementById("works-modal");
+      const modal_content = document.getElementById("modal-content");
+
+      if (!modal_element || !modal_content) {
+        console.error("works modal elements not found");
+        return;
+      }
+
+      const project = projects_data[index_value] || {};
+
+      modal_content.innerHTML = `
+        <div class="mb-4 text-center">
+          <p class="text-sm mt-1">${project.year || ""}年</p>
+          <h2 class="text-2xl font-bold">${project.title || ""}</h2>
+          <span class="text-sm">${project.tag || ""}</span>
+        </div>
+        <div class="mb-4 text-center">
+          <img 
+            src="/image/works/${project.image || ""}" 
+            alt="${project.title || ""}" 
+            class="w-full object-cover rounded"
+            loading="lazy"
+          />
+        </div>
+        <p class="leading-relaxed text-center mb-4">${project.description || ""}</p>
+        ${project.content && typeof project.content === "string" ? `<div class="prose prose-stone prose-sm max-w-none">${project.content}</div>` : ""}
+      `;
+
+      modal_element.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+
+      setTimeout(() => {
+        modal_element.classList.remove("opacity-0");
+        modal_element.classList.add("opacity-100");
+      }, 10);
+    }
+
+    function close() {
+      const modal_element = document.getElementById("works-modal");
+      if (!modal_element) return;
+
+      modal_element.classList.remove("opacity-100");
+      modal_element.classList.add("opacity-0");
+      document.body.style.overflow = "";
+
+      setTimeout(() => {
+        modal_element.classList.add("hidden");
+        const modal_content = document.getElementById("modal-content");
+        if (modal_content) modal_content.innerHTML = "";
+      }, 200);
+    }
+
+    function initialize() {
+      const work_buttons = document.querySelectorAll("button[data-index]");
+      work_buttons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const index_value = parseInt(this.getAttribute("data-index") || "0", 10);
+          open(index_value);
+        });
+      });
+
+      const modal_element = document.getElementById("works-modal");
+      if (modal_element) {
+        modal_element.addEventListener("click", (e) => {
+          if (e.target === modal_element) close();
+        });
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") close();
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initialize);
+    } else {
+      initialize();
+    }
+  })();
+</script>
+</script>

@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Container from "../components/Container.astro";
+import Title from "../components/Title.astro";
+---
+
+<Layout title="お問い合わせ" description="ご質問やご相談はこちらからどうぞ。">
+    <Container>
+        <Title title="Contact" subtitle="ご質問やご相談はこちらへお願いします。" />
+        <div class="mx-auto mt-8 px-4 py-6 bg-white rounded-lg border">
+            <p class="mb-4 text-center">下記アドレス宛にご連絡ください。</p>
+            <div class="flex items-center justify-center gap-2 ">
+                <span class="font-semibold">メール：</span>
+                <a href="mailto:contact@ehor.jp" class="text-blue-500 underline">contact@ehor.jp</a>
+            </div>
+        </div>
+    </Container>
+</Layout>

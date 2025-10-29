@@ -1,16 +1,17 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
- .animate-slide {
-    display: flex;
-    animation: slide 10s linear infinite;
-  }
+@layer base {
 
-  @keyframes slide {
-    0% {
-      transform: translateX(0);
+    *,
+    ::after,
+    ::before {
+        border-color: #b9b9b9;
     }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
+}
+
+@theme {
+    --color-gray: #6e6e6e;
+    --color-darkgray: #555;
+    --color-accent: #cb0b0b;
+}
