@@ -2,6 +2,9 @@
 @plugin '@tailwindcss/typography';
 
 @layer base {
+    body {
+        font-family: "Noto Sans JP", "Hiragino Sans", "ヒラギノ角ゴシック", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
 
     *,
     ::after,
