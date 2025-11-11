@@ -1,9 +1,18 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
+@theme {
+    --color-gray: #6e6e6e;
+    --color-darkgray: #555;
+    --color-accent: #cb0b0b;
+}
+
 @layer base {
     body {
         font-family: "Noto Sans JP", "Hiragino Sans", "ヒラギノ角ゴシック", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    html {
+        scrollbar-gutter: stable;
     }
 
     *,
@@ -13,8 +22,21 @@
     }
 }
 
-@theme {
-    --color-gray: #6e6e6e;
-    --color-darkgray: #555;
-    --color-accent: #cb0b0b;
+@layer utilities {
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow: hidden;
+    }
+    
+    .scrollbar-stable {
+        scrollbar-gutter: stable;
+    }
+
+    .modal-open {
+        overflow: hidden;
+        padding-right: var(--scrollbar-width, 0);
+    }
 }

@@ -1,0 +1,175 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+interface Props {
+    links?: Array<{
+        href: string;
+        title: string;
+        description: string;
+        icon: string;
+    }>;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const { links = [
+    {
+        href: lang === 'ja' ? '/contact' : `/${lang}/contact`,
+        title: t('menu.contact.title'),
+        description: t('menu.contact.description'),
+        icon: "mdi:email",
+    },
+    {
+        href: "https://nuller.jp",
+        title: t('menu.team.title'),
+        description: t('menu.team.description'),
+        icon: "mdi:code",
+    }
+] } = Astro.props;
+---
+<div id="menu-modal" class="fixed inset-0 z-50 hidden">
+    <div class="w-full h-full bg-white opacity-0 transition-opacity duration-500" id="menu-modal-bg">
+        <div class="flex items-center justify-center min-h-screen p-8">
+            <div class="w-full max-w-lg opacity-0 transition-opacity duration-500" id="menu-modal-content">
+                <button id="menu-close" class="absolute top-8 right-8 text-3xl text-black transition-colors rounded-full w-12 h-12 flex items-center justify-center">
+                    ✕
+                </button>
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-black mb-2">{t('menu.title')}</h2>
+                    <p>{t('menu.subtitle')}</p>
+                </div>
+                <div class="space-y-4">
+                    
+                    {links.map((link) => (
+                        <a href={link.href} class="block p-6 rounded-lg border transition-colors hover:border-gray">
+                            <div class="flex items-center gap-4">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                                    {link.icon === 'mdi:email' && (
+                                        <path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" />
+                                    )}
+                                    {link.icon === 'mdi:code' && (
+                                        <path d="M14.6,16.6L19.2,12L14.6,7.4L16,6L22,12L16,18L14.6,16.6M9.4,16.6L4.8,12L9.4,7.4L8,6L2,12L8,18L9.4,16.6Z" />
+                                    )}
+                                    {link.icon === 'mdi:account' && (
+                                        <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                                    )}
+                                    {link.icon === 'mdi:briefcase' && (
+                                        <path d="M10,2H14A2,2 0 0,1 16,4V6H20A2,2 0 0,1 22,8V19A2,2 0 0,1 20,21H4C2.89,21 2,20.1 2,19V8C2,6.89 2.89,6 4,6H8V4C8,2.89 8.89,2 10,2M14,6V4H10V6H14Z" />
+                                    )}
+                                </svg>
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-bold mb-1">
+                                        {link.title}
+                                    </h3>
+                                    <p class="text-sm opacity-80">
+                                        {link.description}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    ))}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const overlay = document.getElementById('menu-modal');
+const backdrop = document.getElementById('menu-modal-bg');
+const content = document.getElementById('menu-modal-content');
+const close_button = document.getElementById('menu-close');
+
+function scrollbar() {
+        return window.innerWidth - document.documentElement.clientWidth;
+}
+
+function prevent() {
+        const w = scrollbar();
+        if (w > 0) {
+                document.documentElement.style.setProperty('--scrollbar-width', `${w}px`);
+                document.body.style.paddingRight = `${w}px`;
+        }
+}
+
+function restore() {
+        document.documentElement.style.removeProperty('--scrollbar-width');
+        document.body.style.paddingRight = '';
+}
+
+function show() {
+        if (overlay && backdrop && content) {
+                overlay.classList.remove('hidden');
+                prevent();
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                        backdrop.classList.remove('opacity-0');
+                        content.classList.remove('opacity-0');
+                }, 50);
+        }
+}
+function hide() {
+        if (overlay && backdrop && content) {
+                document.body.style.overflow = 'auto';
+                restore();
+                content.classList.add('opacity-0');
+                backdrop.classList.add('opacity-0');
+                setTimeout(() => {
+                        overlay.classList.add('hidden');
+                        backdrop.classList.remove('opacity-0');
+                }, 500);
+        }
+}
+close_button?.addEventListener('click', hide);
+overlay?.addEventListener('click', (e: Event) => {
+        const target = e.target as HTMLElement;
+        if (target === overlay) {
+                hide();
+        }
+});
+document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+                hide();
+        }
+});
+document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const menuParam = urlParams.get('menu');
+        if (window.location.pathname === '/links' || window.location.pathname === '/links/') {
+                window.history.replaceState({}, '', '/');
+                setTimeout(() => {
+                        show();
+                }, 100);
+        }
+        else if (menuParam === 'open') {
+                window.history.replaceState({}, '', '/');
+                setTimeout(() => {
+                        show();
+                }, 200);
+        }
+        else if (sessionStorage.getItem('showMenuModal') === 'true') {
+                sessionStorage.removeItem('showMenuModal');
+                setTimeout(() => {
+                        show();
+                }, 200);
+        }
+        const trigger = document.querySelector('[data-menu-trigger]');
+        trigger?.addEventListener('click', (e) => {
+                e.preventDefault();
+                show();
+        });
+        window.addEventListener('popstate', () => {
+                if (window.location.pathname === '/links' || window.location.pathname === '/links/') {
+                        sessionStorage.setItem('showMenuModal', 'true');
+                        window.history.replaceState({}, '', '/?menu=open');
+                        setTimeout(() => {
+                                show();
+                        }, 100);
+                }
+        });
+});
+(window as any).show = show;
+(window as any).hide = hide;
+</script>

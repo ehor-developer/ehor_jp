@@ -1,13 +1,13 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Title from "../components/Title.astro";
-import Modal from "../components/Modal.astro";
+import Layout from "../../layouts/Layout.astro";
+import Title from "../../components/Title.astro";
+import Modal from "../../components/Modal.astro";
 import { Image } from "astro:assets";
-import { useTranslations } from '../i18n/utils';
-import avatar from "../../assets/icon.png";
+import { useTranslations } from '../../i18n/utils';
+import avatar from "../../../assets/icon.png";
 import worksData from "./works/_works.json";
 
-const t = useTranslations('ja');
+const t = useTranslations('zh');
 const projectsData = worksData;
 ---
 
@@ -56,14 +56,14 @@ const projectsData = worksData;
               <div class="flex flex-wrap gap-2">
                 {
                   [
-                    "ホームページ制作",
-                    "資料制作",
-                    "アプリ開発",
-                    "映像制作",
-                    "写真・動画撮影",
-                    "課題解決",
-                    "アイデア発想",
-                    "プロジェクトマネジメント",
+                    "网站制作",
+                    "文档设计",
+                    "应用开发",
+                    "视频制作",
+                    "摄影摄像",
+                    "问题解决",
+                    "创意构思",
+                    "项目管理",
                   ].map((item) => (
                     <span class="py-1 px-3 bg-stone-100 text-stone-700 rounded-full text-sm">
                       {item}
@@ -77,18 +77,18 @@ const projectsData = worksData;
               {
                 [
                   {
-                    category: "デザイン",
+                    category: "设计",
                     tools: [
                       "Adobe Illustrator",
                       "Adobe Photoshop",
                       "Figma",
                       "Canva",
                       "Keynote",
-                      "Googleスライド",
+                      "Google Slides",
                     ],
                   },
                   {
-                    category: "開発",
+                    category: "开发",
                     tools: [
                       "HTML",
                       "CSS",
@@ -100,7 +100,7 @@ const projectsData = worksData;
                     ],
                   },
                   {
-                    category: "映像制作",
+                    category: "视频制作",
                     tools: ["Adobe Premiere Pro", "Adobe After Effects"],
                   },
                 ].map(({ category, tools }) => (
@@ -132,7 +132,7 @@ const projectsData = worksData;
       >
         <Image
           src="/github.svg"
-          alt="GitHubのアイコン"
+          alt="GitHub图标"
           class="w-6 h-6 opacity-100 duration-300 hover:scale-125 hover:opacity-70"
           width={24}
           height={24}
@@ -147,7 +147,7 @@ const projectsData = worksData;
       >
         <Image
           src="/X.svg"
-          alt="Xのアイコン"
+          alt="X图标"
           class="w-6 h-6 opacity-100 duration-300 hover:scale-125 hover:opacity-70"
           width={24}
           height={24}
@@ -288,5 +288,4 @@ const projectsData = worksData;
       initialize();
     }
   })();
-
 </script>

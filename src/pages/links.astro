@@ -1,48 +1,56 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Container from "../components/Container.astro";
-import Title from "../components/Title.astro";
-import { Icon } from "astro-icon/components";
-const links = [
-    {
-        href: "/contact",
-        title: "お問い合わせ",
-        description: "お気軽にご連絡ください。",
-        icon: "mdi:email",
-    },
-    {
-        href: "https://nuller.jp",
-        title: "Nuller開発チーム",
-        description: "私が立ち上げたチームの公式サイト",
-        icon: "mdi:code",
-    },
-];
+// このページは直接アクセス時にリダイレクト用として使用
+// メニューモーダルが自動で起動する
 ---
 
-<Layout title="Works" description="私のプロジェクト一覧です。">
-    <Container>
-        <Title title="Menu" subtitle="お探しのものを選択してください。" />
-        <div>
-            {
-                links.map((link) => (
-                    <div
-                        class="border hover:border-gray transition py-4 px-6 rounded-lg"
-                        style="margin-bottom: 1rem;"
-                    >
-                        <a href={link.href} class="flex items-center gap-4">
-                            <Icon class="text-3xl" name={link.icon} />
-                            <div>
-                                <h3 class="text-xl font-semibold">
-                                    {link.title}
-                                </h3>
-                                <p class="text-xs text-gray">
-                                    {link.description}
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                ))
-            }
-        </div>
-    </Container>
-</Layout>
+<script>
+  // クライアントサイドでのリダイレクト（モーダル起動フラグ付き）
+  if (typeof window !== 'undefined') {
+    // sessionStorageにモーダル起動フラグを設定
+    sessionStorage.setItem('showMenuModal', 'true');
+    // URLパラメータでもフラグを設定
+    window.location.replace('/?menu=open');
+  }
+</script>
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background-color: #f9fafb;
+    }
+    .loading {
+      text-align: center;
+    }
+    .spinner {
+      border: 3px solid #f3f4f6;
+      border-radius: 50%;
+      border-top: 3px solid #3b82f6;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="loading">
+    <div class="spinner"></div>
+    <p>メニューを開いています...</p>
+  </div>
+</body>
+</html>
