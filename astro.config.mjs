@@ -13,5 +13,12 @@ export default defineConfig({
         prefetchAll: true
     },
     site: 'https://ehor.jp',
+    i18n: {
+        defaultLocale: 'ja',
+        locales: ['ja', 'en', 'zh'],
+        routing: {
+            prefixDefaultLocale: false
+        }
+    },
     integrations: [sitemap(), icon()],
 });

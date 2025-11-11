@@ -1,0 +1,34 @@
+[
+  {
+    "title": "NullerTeam",
+    "tag": "#N High School #Management #Design",
+    "year": "2023",
+    "image": "nuller.png",
+    "description": "Founded a development team at school.",
+    "role": "Representative & Management"
+  },
+  {
+    "title": "Website",
+    "tag": "#Design #Programming",
+    "year": "2024",
+    "image": "nuller-web.png",
+    "description": "Created the official website for Nuller.",
+    "role": "Design & Development"
+  },
+  {
+    "title": "Digital Stamp Rally",
+    "tag": "#N High School #Web App",
+    "year": "2024",
+    "image": "stamp-app.png",
+    "description": "App developed for the school festival.",
+    "role": "Design & System Development"
+  },
+  {
+    "title": "Design",
+    "tag": "#Key Visual #Slides",
+    "year": "2024",
+    "image": "design.gif",
+    "description": "Key visuals and materials I created.",
+    "role": "Design & System Development"
+  }
+]

@@ -1,13 +1,13 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Title from "../components/Title.astro";
-import Modal from "../components/Modal.astro";
+import Layout from "../../layouts/Layout.astro";
+import Title from "../../components/Title.astro";
+import Modal from "../../components/Modal.astro";
 import { Image } from "astro:assets";
-import { useTranslations } from '../i18n/utils';
-import avatar from "../../assets/icon.png";
+import { useTranslations } from '../../i18n/utils';
+import avatar from "../../../assets/icon.png";
 import worksData from "./works/_works.json";
 
-const t = useTranslations('ja');
+const t = useTranslations('en');
 const projectsData = worksData;
 ---
 
@@ -56,14 +56,14 @@ const projectsData = worksData;
               <div class="flex flex-wrap gap-2">
                 {
                   [
-                    "ホームページ制作",
-                    "資料制作",
-                    "アプリ開発",
-                    "映像制作",
-                    "写真・動画撮影",
-                    "課題解決",
-                    "アイデア発想",
-                    "プロジェクトマネジメント",
+                    "Website Development",
+                    "Document Design", 
+                    "App Development",
+                    "Video Production",
+                    "Photography & Video",
+                    "Problem Solving",
+                    "Idea Generation",
+                    "Project Management",
                   ].map((item) => (
                     <span class="py-1 px-3 bg-stone-100 text-stone-700 rounded-full text-sm">
                       {item}
@@ -77,18 +77,18 @@ const projectsData = worksData;
               {
                 [
                   {
-                    category: "デザイン",
+                    category: "Design",
                     tools: [
                       "Adobe Illustrator",
                       "Adobe Photoshop",
                       "Figma",
                       "Canva",
                       "Keynote",
-                      "Googleスライド",
+                      "Google Slides",
                     ],
                   },
                   {
-                    category: "開発",
+                    category: "Development",
                     tools: [
                       "HTML",
                       "CSS",
@@ -100,7 +100,7 @@ const projectsData = worksData;
                     ],
                   },
                   {
-                    category: "映像制作",
+                    category: "Video Production",
                     tools: ["Adobe Premiere Pro", "Adobe After Effects"],
                   },
                 ].map(({ category, tools }) => (
@@ -132,7 +132,7 @@ const projectsData = worksData;
       >
         <Image
           src="/github.svg"
-          alt="GitHubのアイコン"
+          alt="GitHub icon"
           class="w-6 h-6 opacity-100 duration-300 hover:scale-125 hover:opacity-70"
           width={24}
           height={24}
@@ -147,7 +147,7 @@ const projectsData = worksData;
       >
         <Image
           src="/X.svg"
-          alt="Xのアイコン"
+          alt="X icon"
           class="w-6 h-6 opacity-100 duration-300 hover:scale-125 hover:opacity-70"
           width={24}
           height={24}
@@ -221,7 +221,7 @@ const projectsData = worksData;
 
       modal_content.innerHTML = `
         <div class="mb-4 text-center">
-          <p class="text-sm mt-1">${project.year || ""}年</p>
+          <p class="text-sm mt-1">${project.year || ""}</p>
           <h2 class="text-2xl font-bold">${project.title || ""}</h2>
           <span class="text-sm">${project.tag || ""}</span>
         </div>
@@ -288,5 +288,4 @@ const projectsData = worksData;
       initialize();
     }
   })();
-
 </script>

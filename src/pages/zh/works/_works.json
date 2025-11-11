@@ -1,0 +1,34 @@
+[
+  {
+    "title": "NullerTeam",
+    "tag": "#N高等学校 #管理 #设计",
+    "year": "2023",
+    "image": "nuller.png",
+    "description": "在学校内创立了开发团队。",
+    "role": "代表·运营"
+  },
+  {
+    "title": "网站",
+    "tag": "#设计 #编程",
+    "year": "2024",
+    "image": "nuller-web.png",
+    "description": "制作了Nuller的官方网站。",
+    "role": "设计开发"
+  },
+  {
+    "title": "电子印章拉力赛",
+    "tag": "#N高等学校 #Web应用",
+    "year": "2024",
+    "image": "stamp-app.png",
+    "description": "为文化祭制作的应用程序。",
+    "role": "设计开发·系统开发"
+  },
+  {
+    "title": "设计",
+    "tag": "#关键视觉 #幻灯片",
+    "year": "2024",
+    "image": "design.gif",
+    "description": "制作的关键视觉和资料。",
+    "role": "设计开发·系统开发"
+  }
+]
