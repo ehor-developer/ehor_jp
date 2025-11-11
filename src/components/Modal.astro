@@ -52,93 +52,82 @@ const { id, triggerText, triggerId, maxWidth = "max-w-2xl" } = Astro.props;
 
 <script>
   (function() {
-    // Track currently open modal
-    let currentOpenModal: HTMLElement | null = null;
+    let active_modal: HTMLElement | null = null;
 
-    function setupModalById(modalId: string) {
-      const modal = document.getElementById(modalId);
-      const modalDialog = document.getElementById(`${modalId}-dialog`);
-      const modalBackdrop = document.getElementById(`${modalId}-backdrop`);
-      const closeBtn = document.getElementById(`close-${modalId}-btn`);
-      const openBtn = document.getElementById(`${modalId}-btn`);
+    function setup(modal_id: string) {
+      const modal = document.getElementById(modal_id);
+      const modal_dialog = document.getElementById(`${modal_id}-dialog`);
+      const modal_backdrop = document.getElementById(`${modal_id}-backdrop`);
+      const close_btn = document.getElementById(`close-${modal_id}-btn`);
+      const open_btn = document.getElementById(`${modal_id}-btn`);
 
-      if (!modal || !modalDialog) {
-        console.warn(`Modal elements not found for: ${modalId}`);
+      if (!modal || !modal_dialog) {
         return null;
       }
 
-      console.log(`Setting up modal: ${modalId}`);
-
-      const openModal = () => {
-        // Close any currently open modal first
-        if (currentOpenModal && currentOpenModal !== modal) {
-          closeAnyModal(currentOpenModal);
+      const open_modal = () => {
+        if (active_modal && active_modal !== modal) {
+          hide_modal(active_modal);
         }
 
         modal.classList.remove("hidden");
         document.body.style.overflow = "hidden";
-        currentOpenModal = modal;
-        
+        active_modal = modal;
+
         setTimeout(() => {
           modal.classList.remove("opacity-0");
           modal.classList.add("opacity-100");
         }, 10);
       };
 
-      const closeModal = () => {
+      const close_modal = () => {
         modal.classList.remove("opacity-100");
         modal.classList.add("opacity-0");
-        
-        // Reset current modal reference immediately
-        if (currentOpenModal === modal) {
-          currentOpenModal = null;
+
+        if (active_modal === modal) {
+          active_modal = null;
         }
-        
+
         setTimeout(() => {
           modal.classList.add("hidden");
-          // Only reset overflow if no modal is open
-          if (!currentOpenModal) {
+          if (!active_modal) {
             document.body.style.overflow = "";
           }
         }, 300);
       };
 
-      // Open button click
-      if (openBtn) {
-        openBtn.addEventListener("click", (e) => {
+      if (open_btn) {
+        open_btn.addEventListener("click", (e) => {
           e.preventDefault();
-          openModal();
+          open_modal();
         });
       }
 
-      // Close button click
-      if (closeBtn) {
-        closeBtn.addEventListener("click", (e) => {
+      if (close_btn) {
+        close_btn.addEventListener("click", (e) => {
           e.preventDefault();
-          closeModal();
+          close_modal();
         });
       }
 
-      // Backdrop click
-      if (modalBackdrop) {
-        modalBackdrop.addEventListener("click", (event) => {
-          if (!modalDialog.contains(event.target as Node)) {
-            closeModal();
+      if (modal_backdrop) {
+        modal_backdrop.addEventListener("click", (event) => {
+          if (!modal_dialog.contains(event.target as Node)) {
+            close_modal();
           }
         });
       }
 
-      // Escape key
       document.addEventListener("keydown", (event: KeyboardEvent) => {
-        if (event.key === "Escape" && currentOpenModal === modal) {
-          closeModal();
+        if (event.key === "Escape" && active_modal === modal) {
+          close_modal();
         }
       });
 
-      return { openModal, closeModal };
+      return { open_modal, close_modal };
     }
 
-    function closeAnyModal(modal: HTMLElement) {
+    function hide_modal(modal: HTMLElement) {
       modal.classList.remove("opacity-100");
       modal.classList.add("opacity-0");
       setTimeout(() => {
@@ -146,31 +135,27 @@ const { id, triggerText, triggerId, maxWidth = "max-w-2xl" } = Astro.props;
       }, 300);
     }
 
-    // Export to window
-    (window as any).setupModal = setupModalById;
-    (window as any).closeCurrentModal = () => {
-      if (currentOpenModal) {
-        const modalToClose = currentOpenModal;
-        currentOpenModal = null;
-        closeAnyModal(modalToClose);
+    (window as any).setup = setup;
+    (window as any).dismiss = () => {
+      if (active_modal) {
+        const modal_to_close = active_modal;
+        active_modal = null;
+        hide_modal(modal_to_close);
         document.body.style.overflow = "";
       }
     };
 
-    // Auto-initialize all modals when DOM is ready
-    function initializeModals() {
+    function init() {
       const modals = document.querySelectorAll('[id$="-modal"]');
-      console.log(`Found ${modals.length} modal(s) to initialize`);
-      modals.forEach((modalElement) => {
-        setupModalById(modalElement.id);
+      modals.forEach((modal_element) => {
+        setup((modal_element as HTMLElement).id);
       });
     }
 
-    // Run on DOMContentLoaded or immediately if already loaded
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initializeModals);
+      document.addEventListener('DOMContentLoaded', init);
     } else {
-      initializeModals();
+      init();
     }
   })();
 </script>
